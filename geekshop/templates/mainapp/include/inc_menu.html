@@ -1,0 +1,15 @@
+<div class="header clearfix">
+    <a href="/" class="logo"></a>
+    <ul class="menu">
+        {% for link in menu_links %}
+            <li><a href="{% url link.view_name %}"
+                class="{% if request.resolver_match.url_name == link.view_name %} active {% endif %}">
+                {{ link.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="#" class="search"></a>
+</div>
+
+    
