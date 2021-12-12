@@ -1,0 +1,12 @@
+{% load static %}
+{% for product in products %}
+<div class="block">
+    <a href="#"><img src="{% static product.img %}" alt="">
+        <div class="text">
+            <img src="{% static 'img/icon-hover.png' %}" alt="img">
+            <h4>{{ product.desc }}</h4>
+            <p>Не оторваться. </p>
+        </div>
+    </a>
+</div>
+{% endfor %}
