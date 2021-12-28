@@ -277,6 +277,12 @@ html, body {
     text-align: center;
     border: 1px solid #9c9c9c;
 }
+
+a .product-image {
+	height: 268px;
+	width: 268px;
+}
+
 .tab-content a .text h4 {
 	color:  #212121;
 	font-size: 22px;
@@ -1035,6 +1041,7 @@ td:first-child {
 	width: 370px;
 	position: relative;
 }
+
 .related-products .block:nth-child(3n) {
 	margin-right: 0px;
 }

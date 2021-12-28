@@ -3,7 +3,7 @@
     <ul class="menu">
         {% for link in menu_links %}
             <li><a href="{% url link.view_name %}"
-                class="{% if request.resolver_match.url_name == link.view_name %} active {% endif %}">
+                class="{% if request.resolver_match.url_name == link.view_name %} active {% endif %}"">
                 {{ link.name }}
             </a>
         </li>
