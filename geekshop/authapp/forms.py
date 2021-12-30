@@ -27,8 +27,16 @@ class ShopUserRegisterForm(UserCreationForm):
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
+class KazanRestrictionMixin:
+    def clean_city(self):
+        data = self.cleaned_data['city']
+        if data != 'Казань':
+            raise forms.ValidationError("Только для жителей Казани!")
+        
+        return data
 
-class ShopUserEditForm(UserChangeForm):
+
+class ShopUserEditForm(KazanRestrictionMixin, UserChangeForm):
     class Meta:
         model = ShopUser
         fields = ('username', 'first_name', 'email', 'avatar', 'city', 'password')
