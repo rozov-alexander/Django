@@ -2,14 +2,33 @@
     <a href="/" class="logo"></a>
     <ul class="menu">
         {% for link in menu_links %}
-            <li><a href="{% url link.view_name %}"
-                class="{% if request.resolver_match.url_name == link.view_name %} active {% endif %}"">
-                {{ link.name }}
+        <li>
+            <a href="{% url link.view_name %}
+                {% with url=request.resolver_match.view_name %}
+                {% if url in link.active_if %}
+                    class="active"
+                {% endif %}">
+                {% endwith %}
+            {{ link.name }}
             </a>
         </li>
         {% endfor %}
+        {% if user.is_authenticated %}
+        <li>
+            <a href="{% url 'auth:edit' %}">
+                {{ user.first_name|default:'Пользователь' }}
+            </a>
+        </li>
+        {% endif %}
+        <li>
+            {% if user.is_authenticated %}
+                <a href="{% url 'auth:logout' %}">выйти</a>
+            {% else %}
+                <a href="{% url 'auth:login' %}">войти</a>
+                <a href="{% url 'auth:register' %}">зарегистироваться</a>
+            {% endif %}
+        </li>
     </ul>
     <a href="#" class="search"></a>
-</div>
 
-    
+</div>
