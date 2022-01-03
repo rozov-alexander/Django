@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import ProductCategory, Product
 
 
@@ -38,9 +38,10 @@ def products(request, pk=None):
     if not pk:
         current_category = ProductCategory.objects.first()
     else:
-        current_category = get_object_or_404(ProductCategory, pk)
+        current_category = get_object_or_404(ProductCategory, id=pk)
     categories = ProductCategory.objects.all()
     products = Product.objects.filter(category=current_category)
+    # import pdb; pdb.set_trace()
     return render(request, 'mainapp/products.html', context={
         'menu_links': menu_links,
         'title': 'продукты',
