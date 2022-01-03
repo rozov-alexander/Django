@@ -7,6 +7,7 @@ import json, os
 JSON_PATH = 'mainapp/json'
 
 def load_from_json(file_name):
+    # import pdb; pdb.set_trace()
     with open(os.path.join(JSON_PATH, file_name + '.json'), 'r') as infile:
         return json.load(infile)
 
