@@ -28,6 +28,7 @@
                 <a href="{% url 'auth:register' %}">зарегистироваться</a>
             {% endif %}
         </li>
+        <a href="{% url 'cart:cart' %}">Корзина ({{ cart|length }})</a>
     </ul>
     <a href="#" class="search"></a>
 
