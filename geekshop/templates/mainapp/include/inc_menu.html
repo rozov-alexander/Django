@@ -1,9 +1,10 @@
+{% load static %}
 <div class="header clearfix">
     <a href="/" class="logo"></a>
     <ul class="menu">
         {% for link in menu_links %}
         <li>
-            <a href="{% url link.view_name %}
+            <a href="{% url link.view_name %}"
                 {% with url=request.resolver_match.view_name %}
                 {% if url in link.active_if %}
                     class="active"
@@ -23,12 +24,19 @@
         <li>
             {% if user.is_authenticated %}
                 <a href="{% url 'auth:logout' %}">выйти</a>
+                <a href="{% url 'cart:cart' %}">Корзина
+                    <span>
+                        {% if cart %}
+                            {{ cart.0.total_cost }} руб
+                            ({{ cart.0.total_quantity }} шт)
+                        {% endif %}
+                    </span>
+                </a>
             {% else %}
                 <a href="{% url 'auth:login' %}">войти</a>
                 <a href="{% url 'auth:register' %}">зарегистироваться</a>
             {% endif %}
         </li>
-        <a href="{% url 'cart:cart' %}">Корзина ({{ cart|length }})</a>
     </ul>
     <a href="#" class="search"></a>
 
