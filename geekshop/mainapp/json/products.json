@@ -1,18 +1,72 @@
 [
     {
-        "category": "стулья",
-        "name": "Просто стул"
+        "model": "mainapp.product",
+        "pk": 1,
+        "fields": {
+            "category": 1,
+            "name": "Лава-лампа",
+            "image": "products_images/product-1.jpg",
+            "description": "Лава-лампа",
+            "short_desc": "Лава-лампа",
+            "price": "2000.00",
+            "price_with_discount": "0.00",
+            "quantity": 10
+        }
     },
     {
-        "category": "лампы",
-        "name": "Светодиодная лампа"
+        "model": "mainapp.product",
+        "pk": 2,
+        "fields": {
+            "category": 1,
+            "name": "Светодиодная лампа",
+            "image": "products_images/product-31.jpg",
+            "description": "Светодиодная лампа",
+            "short_desc": "Светодиодная лампа",
+            "price": "3000.00",
+            "price_with_discount": "0.00",
+            "quantity": 20
+        }
     },
     {
-        "category": "лампы",
-        "name": "Супер-лампа"
+        "model": "mainapp.product",
+        "pk": 3,
+        "fields": {
+            "category": 1,
+            "name": "Лампа из 90-х",
+            "image": "products_images/product-5-sm.jpg",
+            "description": "Лампа из 90-х",
+            "short_desc": "Лампа из 90-х",
+            "price": "1300.00",
+            "price_with_discount": "0.00",
+            "quantity": 0
+        }
     },
     {
-        "category": "лампы",
-        "name": "Лава-лампа"
+        "model": "mainapp.product",
+        "pk": 4,
+        "fields": {
+            "category": 2,
+            "name": "Стол",
+            "image": "products_images/slider-hotdeal.jpg",
+            "description": "Стол как стол",
+            "short_desc": "Стол как стол",
+            "price": "1500.00",
+            "price_with_discount": "0.00",
+            "quantity": 5
+        }
+    },
+    {
+        "model": "mainapp.product",
+        "pk": 5,
+        "fields": {
+            "category": 3,
+            "name": "Кресло",
+            "image": "products_images/product-2.jpg",
+            "description": "Кресло",
+            "short_desc": "",
+            "price": "3000.00",
+            "price_with_discount": "0.00",
+            "quantity": 2
+        }
     }
 ]

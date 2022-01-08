@@ -1,13 +1,26 @@
-{
-    "categories": [
-        {
-            "name": "стулья"
-        },
-        {
-            "name": "кресла"
-        },
-        {
-            "name": "лампы"
+[
+    {
+        "model": "mainapp.productcategory",
+        "pk": 1,
+        "fields": {
+            "name": "Лампы",
+            "description": ""
         }
-    ]
-}
+    },
+    {
+        "model": "mainapp.productcategory",
+        "pk": 2,
+        "fields": {
+            "name": "Столы",
+            "description": ""
+        }
+    },
+    {
+        "model": "mainapp.productcategory",
+        "pk": 3,
+        "fields": {
+            "name": "Стулья",
+            "description": ""
+        }
+    }
+]
