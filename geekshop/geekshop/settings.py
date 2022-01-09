@@ -141,3 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Auth
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
+
+# Login URL from login_requiest
+
+LOGIN_URL = '/auth/login/'

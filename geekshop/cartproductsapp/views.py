@@ -1,15 +1,25 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from mainapp.models import Product
 from .models import Cart
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 
+@login_required
 def cart(request):
+    title = 'корзина'
+    cart_items = Cart.objects.filter(user=request.user).order_by('product__category')
+
     content = {
-        'cart_total': len(request.user.cart.all()),
+        'title': title,
+        'cart_items': cart_items,
     }
     return render(request, 'cartproductsapp/cart.html', content)
 
 
+@login_required
 def add_to_cart(request, pk=None):
     product = get_object_or_404(Product, pk=pk)
 
@@ -21,8 +31,36 @@ def add_to_cart(request, pk=None):
     cart_product.quantity += 1
     cart_product.save()
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    if 'login' in request.META.get('HTTP_REFERER'):
+        return HttpResponseRedirect(reverse('products:product', args=[pk]))
+    else:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+@login_required
+def cart_edit(request, pk, quantity):
+    quantity = int(quantity)
+    new_cart_item = Cart.objects.get(pk=int(pk))
+
+    if quantity > 0:
+        new_cart_item.quantity = quantity
+        new_cart_item.save()
+    else:
+        new_cart_item.delete()
+
+    cart_items = Cart.objects.filter(user=request.user).order_by('product__category')
+
+    content = {
+        'cart_items': cart_items,
+    }
+
+    result = render_to_string('cartproductsapp/includes/inc_cart_list.html', content)
+
+    return JsonResponse({'result': result})
 
 
+@login_required
 def remove_from_cart(request, pk):
-    return render(request, 'cartproductsapp/cart.html')
+    cart_record = get_object_or_404(Cart, pk=pk)
+    cart_record.delete()
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
