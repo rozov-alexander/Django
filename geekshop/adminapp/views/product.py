@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse
 from mainapp.models import ProductCategory, Product
 from adminapp.forms import ProductEditForm
+from django.views.generic.detail import DetailView
 
 
 
@@ -38,14 +39,18 @@ def product_create(request, pk):
     
     return render(request, 'adminapp/product_update.html', content)
 
+# Class Based View
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'adminapp/product_read.html'
 
-
-def product_read(request, pk): 
-    title = 'продукт/подробнее'
-    product = get_object_or_404(Product, pk=pk) 
-    content = {'title': title, 'object': product,}
+# Old view, without CBV (Function Based View)
+# def product_read(request, pk): 
+#     title = 'продукт/подробнее'
+#     product = get_object_or_404(Product, pk=pk) 
+#     content = {'title': title, 'object': product,}
     
-    return render(request, 'adminapp/product_read.html', content)
+#     return render(request, 'adminapp/product_read.html', content)
 
 
 def product_update(request, pk): 
