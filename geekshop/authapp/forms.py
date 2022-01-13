@@ -2,6 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django import forms
+import random, hashlib
 
 from .models import ShopUser
 
@@ -27,16 +28,26 @@ class ShopUserRegisterForm(UserCreationForm):
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
-class KazanRestrictionMixin:
-    def clean_city(self):
-        data = self.cleaned_data['city']
-        if data != 'Казань':
-            raise forms.ValidationError("Только для жителей Казани!")
+    def save(self):
+        user = super(ShopUserRegisterForm, self).save()
+
+        user.is_active = False
+        salt = hashlib.sha1(str(random.random()).encode('utf8')).hexdigest()[:6]
+        user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
+        user.save()
+
+        return user
+
+# class KazanRestrictionMixin:
+#     def clean_city(self):
+    #     data = self.cleaned_data['city']
+    #     if data != 'Казань':
+    #         raise forms.ValidationError("Только для жителей Казани!")
         
-        return data
+    #     return data
 
 
-class ShopUserEditForm(KazanRestrictionMixin, UserChangeForm):
+class ShopUserEditForm(UserChangeForm):
     class Meta:
         model = ShopUser
         fields = ('username', 'first_name', 'email', 'avatar', 'city', 'password')
