@@ -5,19 +5,6 @@ from django.urls import reverse
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
-from django.views.generic.list import ListView
-from django.utils.decorators import method_decorator
-
-
-class UsersListView(ListView):
-    model = ShopUser
-    template_name = 'adminapp/users.html'
-
-
-    @method_decorator(user_passes_test(lambda u: u.is_superuser)) 
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
 
 
 def check_is_superuser(user):
@@ -26,15 +13,15 @@ def check_is_superuser(user):
     else: 
         return True
 
-# @user_passes_test(check_is_superuser)
-# def users(request):
-#     title = 'админка/пользователи'
-#     users_list = ShopUser.objects.all().order_by('-is_active', '-is_superuser', '-is_staff', 'username')
-#     content = { 
-#         'title': title,
-#         'objects': users_list 
-#         }
-#     return render(request, 'adminapp/users.html', content)
+@user_passes_test(check_is_superuser)
+def users(request):
+    title = 'админка/пользователи'
+    users_list = ShopUser.objects.all().order_by('-is_active', '-is_superuser', '-is_staff', 'username')
+    content = { 
+        'title': title,
+        'objects': users_list 
+        }
+    return render(request, 'adminapp/users.html', content)
 
 
 @user_passes_test(check_is_superuser)

@@ -1,6 +1,5 @@
 {% extends 'adminapp/base.html' %} 
 {% load static %}
-{% load my_test_tag %}
 
 {% block 'content' %}
 <div class="users_list">
@@ -9,9 +8,9 @@
             новый пользователь 
         </a>
     </button>
-    {% for object in object_list %}
+    {% for object in objects %}
         <div class="user_record {% if not object.is_active %}not_active{% endif %}">
-            <img src="{{ object.avatar|media_folder_users }}" 
+            <img src="/media/{{ object.avatar|default:'user_avatars/default.jpg' }}" 
                 alt="{{ object.username }}">
             <div class="user_role">
                 {% if object.is_superuser %}

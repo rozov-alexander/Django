@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 
 from . import views
 
@@ -9,7 +9,6 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('register/', views.register, name='register'),
     path('edit/', views.edit, name='edit'),
-    re_path(r'^verify/(?P<email>.+)/(?P<activation_key>\w+)/$', views.verify, name='verify'),
 ]
 
 
