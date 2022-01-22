@@ -10,5 +10,20 @@
         {{ login_form.as_p }}
         <br>
         <input class="form-control btn btn-primary" type="submit" value="войти">
-    </form>    
+    </form>
+    <button class="btn btn-round form-control"> 
+        <a href="{% url 'index' %}" class="">
+            на главную 
+        </a>
+    </button>
+    <button class="btn btn-round form-control"> 
+        <a href="{% url 'auth:register' %}" class="">
+            Зарегистрироваться 
+        </a>
+    </button>
+    <button class="btn btn-round form-control"> 
+        <a href="{% url 'social:begin' 'github' %}" class="">
+            Войти через Github 
+        </a>
+    </button>  
 {% endblock %}
