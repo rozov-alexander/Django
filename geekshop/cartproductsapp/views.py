@@ -9,14 +9,14 @@ from django.http import JsonResponse
 
 @login_required
 def cart(request):
-    title = 'корзина'
-    cart_items = Cart.objects.filter(user=request.user).order_by('product__category')
+    title = "корзина"
+    cart_items = Cart.objects.filter(user=request.user).order_by("product__category")
 
     content = {
-        'title': title,
-        'cart_items': cart_items,
+        "title": title,
+        "cart_items": cart_items,
     }
-    return render(request, 'cartproductsapp/cart.html', content)
+    return render(request, "cartproductsapp/cart.html", content)
 
 
 @login_required
@@ -31,11 +31,12 @@ def add_to_cart(request, pk=None):
     cart_product.quantity += 1
     cart_product.save()
 
-    if 'login' in request.META.get('HTTP_REFERER'):
-        return HttpResponseRedirect(reverse('products:product', args=[pk]))
+    if "login" in request.META.get("HTTP_REFERER"):
+        return HttpResponseRedirect(reverse("products:product", args=[pk]))
     else:
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+
 @login_required
 def cart_edit(request, pk, quantity):
     quantity = int(quantity)
@@ -47,15 +48,15 @@ def cart_edit(request, pk, quantity):
     else:
         new_cart_item.delete()
 
-    cart_items = Cart.objects.filter(user=request.user).order_by('product__category')
+    cart_items = Cart.objects.filter(user=request.user).order_by("product__category")
 
     content = {
-        'cart_items': cart_items,
+        "cart_items": cart_items,
     }
 
-    result = render_to_string('cartproductsapp/includes/inc_cart_list.html', content)
+    result = render_to_string("cartproductsapp/includes/inc_cart_list.html", content)
 
-    return JsonResponse({'result': result})
+    return JsonResponse({"result": result})
 
 
 @login_required
@@ -63,4 +64,4 @@ def remove_from_cart(request, pk):
     cart_record = get_object_or_404(Cart, pk=pk)
     cart_record.delete()
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
