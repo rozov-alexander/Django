@@ -6,5 +6,5 @@ def cart(request):
     if request.user.is_authenticated:
         cart = Cart.objects.filter(user=request.user)
     return {
-        'cart': cart,
-        }
+        "cart": cart,
+    }
