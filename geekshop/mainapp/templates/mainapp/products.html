@@ -2,23 +2,15 @@
 
 {% load static %}
 
-{% block 'content' %}
+{% block content %}
 <div class="container">
 	<div class="hero-white">
-		{% include 'mainapp/include/inc_menu.html' %}
+		{% include 'mainapp/includes/inc_menu.html' %}
 	</div>
 
 	<div class="details">
 		<div class="links clearfix">
-			<ul class="links-menu">
-				{% for category in categories %}
-				<li>
-					<a href="{% url 'products:category' category.id %}"
-						class="{% if category.id == current_category.id %} active {% endif %}">{{ category.name }}
-					</a>
-				</li>
-				{% endfor %}
-			</ul>
+			{% include 'mainapp/includes/inc_categories_menu.html' %}
 		</div>
 
 		<div class="details-products">
@@ -47,25 +39,37 @@
 				<a class="explore" href="#">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
 			</div>
 			<div class="related-products clearfix">
-				<div class="paginator">
-					{% include  'mainapp/include/inc_products.html' %}
-					{% if products.has_previous %} 
-						<a href="{% url 'products:page' products.previous_page_number %}">
-						< 
-						</a>
-					{% endif %}
-					<span class="current">
-						страница {{ products.number }} из
-						{{ products.paginator.num_pages }} 
-					</span>
-					{% if products.has_next %}
-						<a href="{% url 'products:page' products.next_page_number %}">
-						> 
-						</a>
-					{% endif %} 
+				{% include  'mainapp/includes/inc_products.html' %}
+				<div class="block">
+					<a href="{% url 'products:index' %}">
+					<img class="product-image" src="/media/{{ same_products.0.image }}" alt="{{ same_products.0.short_desc }}">
+						<div class="text">
+							<h4>{{ same_products.0.name }}</h4>
+							<p>{{ same_products.0.description }}</p>
+						</div>
+					</a>
 				</div>
-		</div>
+				<div class="block">
+					<a href="{% url 'products:index' %}">
+						<img class="product-image" src="/media/{{ same_products.1.image }}" alt="{{ same_products.1.short_desc }}">
+						<div class="text">
+							<h4>{{ same_products.1.name }}</h4>
+							<p>{{ same_products.1.description }}</p>
+						</div>
+					</a>
+				</div>
+				<div class="block">
+					<a href="{% url 'products:index' %}">
+						<img class="product-image" src="/media/{{ same_products.2.image }}" alt="{{ same_products.2.short_desc }}">
+						<div class="text">
+							<h4>{{ same_products.2.name }}</h4>
+							<p>{{ same_products.2.description }}</p>
+						</div>
+					</a>
+				</div>
 
-		<div class=" clr"></div>
 			</div>
-			{% endblock %}
+
+			<div class=" clr"></div>
+		</div>
+		{% endblock %}

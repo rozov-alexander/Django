@@ -2,10 +2,10 @@
 <div class="header clearfix">
     <a href="/" class="logo"></a>
     <ul class="menu">
-        {% for link in menu_links %}
+        {% for link in top_menu_links %}
         <li>
-            <a href="{% url link.view_name %} {% with url=request.resolver_match.view_name %} 
-            {% if url in link.active_if %} class="active" {% endif %}">
+            <a href="{% url link.view_name %}" {% with url=request.resolver_match.view_name %}
+            {% if url in link.active_if %} class="active" {% endif %}>
                 {% endwith %}
                 {{ link.name }}
             </a>

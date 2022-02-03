@@ -21,14 +21,16 @@
 </head>
 <body>
 	
-        {% block 'content' %}
+        {% block content %}
         {% endblock %}
     
 
         <div class="footer">
             <div class="clearfix">
                 <div class="text-footer">
-                    <h3>контакты</h3>
+                    <a href="{% url 'contact' %}">
+                        <h3>Контакты</h3>
+                    </a>
                 </div>
                 <div class="text-footer">
                     <h3>полезная информация</h3>
