@@ -20,8 +20,8 @@ def products(request, pk):
 def product_create(request, pk):
     title = "продукт/создание"
 
-    category = get_object_or_404(ProductCategory, pk=pk)
-
+    category = get_object_or_404(ProductCategory, pk=pk).pk
+    
     if request.method == "POST":
         product_form = ProductEditForm(request.POST, request.FILES)
         if product_form.is_valid():
@@ -75,13 +75,15 @@ def product_delete(request, pk):
     title = "продукт/удаление"
 
     product = get_object_or_404(Product, pk=pk)
+    category = product.category.pk
     pk = product.category.pk
 
     if request.method == "POST":
-        product.is_active = False
-        product.save()
+        # product.is_active = False
+        # product.save()
+        product.delete()
         return HttpResponseRedirect(reverse("admin:products", args=[pk]))
 
-    content = {"title": title, "product_to_delete": product}
+    content = {"title": title, "product_to_delete": product, "category": category}
 
     return render(request, "adminapp/product_delete.html", content)

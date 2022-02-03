@@ -24,7 +24,6 @@ def add_to_cart(request, pk=None):
     product = get_object_or_404(Product, pk=pk)
 
     cart_product = request.user.cart.filter(id=pk).first()
-    # import pdb; pdb.set_trace()
     if not cart_product:
         cart_product = Cart(user=request.user, product=product)
 
@@ -39,6 +38,7 @@ def add_to_cart(request, pk=None):
 
 @login_required
 def cart_edit(request, pk, quantity):
+    
     quantity = int(quantity)
     new_cart_item = Cart.objects.get(pk=int(pk))
 

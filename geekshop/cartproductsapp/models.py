@@ -31,3 +31,17 @@ class Cart(models.Model):
     @classmethod
     def get_items(self, user):
         return Cart.objects.filter(user=user)
+
+    def delete(self):
+        self.product.quantity += self.quantity 
+        self.product.save() 
+        super(self.__class__, self).delete()
+
+    def save(self, *args, **kwargs): 
+        if self.pk:
+            old_cart_item = Cart.objects.get(pk=self.pk)
+            self.product.quantity -= self.quantity - old_cart_item.quantity
+        else:
+            self.product.quantity -= self.quantity
+        self.product.save()
+        super(self.__class__, self).save(*args, **kwargs)
