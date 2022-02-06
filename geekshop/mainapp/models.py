@@ -35,3 +35,8 @@ class Product(models.Model):
     @property
     def total_cost(self):
         return self.price * self.quantity
+
+
+    @staticmethod 
+    def get_items():
+        return Product.objects.filter(is_active=True).order_by('category', 'name')

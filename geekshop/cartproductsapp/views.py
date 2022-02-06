@@ -38,7 +38,7 @@ def add_to_cart(request, pk=None):
 
 @login_required
 def cart_edit(request, pk, quantity):
-    
+
     quantity = int(quantity)
     new_cart_item = Cart.objects.get(pk=int(pk))
 
