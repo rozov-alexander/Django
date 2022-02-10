@@ -28,7 +28,7 @@ def get_hot_product():
 
 
 def index(request):
-    products = Product.objects.all()[:4]
+    products = Product.objects.filter(is_active=True, category__is_active=True).select_related('category')[:3]
 
     return render(
         request,
@@ -69,13 +69,6 @@ def products(request, pk=None, page=1):
             category = get_object_or_404(ProductCategory, pk=pk)
             products = Product.objects.filter(category__pk=pk, \
                         is_active=True, category__is_active=True).order_by('price')
-        # paginator = Paginator(products, 2)
-        # try:
-        #     products_paginator = paginator.page(page)
-        # except PageNotAnInteger:
-        #     products_paginator = paginator.page(1)
-        # except EmptyPage:
-        #     products_paginator = paginator.page(paginator.num_pages)
 
         content = {
             'title': title,
@@ -86,30 +79,10 @@ def products(request, pk=None, page=1):
         }
         return render(request, 'mainapp/products_list.html', content)
 
-    # if not pk:
-    #     current_category = ProductCategory.objects.first()
-    # else:
-    #     current_category = get_object_or_404(ProductCategory, id=pk)
-    # categories = ProductCategory.objects.all()
-    # products = Product.objects.filter(category=current_category)
     if not pk:
         category = ProductCategory.objects.first()
     hot_product = get_hot_product()
-    # paginator = Paginator(same_products, 3)
-    # try:
-    #     products_paginator = paginator.page(page)
-    # except PageNotAnInteger:
-    #     products_paginator = paginator.page(1)
-    # except EmptyPage:
-    #     products_paginator = paginator.page(paginator.num_pages)
-    # content = {
-    #     "title": title,
-    #     "menu_links": menu_links,
-    #     "hot_product": hot_product,
-    #     "categories": categories,
-    #     "products": products_paginator,
-    #     "current_category": current_category,
-    # }
+    
     same_products = Product.objects.all()[3:6]
     content = { 
         'title': title,
