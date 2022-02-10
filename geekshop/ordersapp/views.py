@@ -3,8 +3,6 @@ from django.db.models.signals import pre_save, pre_delete
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.urls.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.forms import inlineformset_factory
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -20,10 +18,6 @@ class OrderList(ListView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
-
-    @method_decorator(login_required())
-    def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)
 
 
 class OrderItemsCreate(CreateView):
