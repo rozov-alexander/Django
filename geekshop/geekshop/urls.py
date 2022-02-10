@@ -21,17 +21,18 @@ from mainapp import views as mainapp_views
 from django.conf.urls import include
 
 urlpatterns = [
-    path('', include('social_django.urls', namespace='social')),
-    path('', mainapp_views.index, name='index'),
-    path('contact/', mainapp_views.contact, name='contact'),
-    path('products/', include('mainapp.urls', namespace='products')),
-    path('auth/', include('authapp.urls', namespace='auth')),
-    path('cart/', include('cartproductsapp.urls', namespace='cart')),
-    path('admin/', include('adminapp.urls', namespace='admin')),
-    path('order/', include('ordersapp.urls', namespace='order')),
+    path("", include("social_django.urls", namespace="social")),
+    path("", mainapp_views.index, name="index"),
+    path("contact/", mainapp_views.contact, name="contact"),
+    path("products/", include("mainapp.urls", namespace="products")),
+    path("auth/", include("authapp.urls", namespace="auth")),
+    path("cart/", include("cartproductsapp.urls", namespace="cart")),
+    path("admin/", include("adminapp.urls", namespace="admin")),
+    path("order/", include("ordersapp.urls", namespace="order")),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns += [re_path(r'^__debug__/', include(debug_toolbar.urls))]
+
+    urlpatterns += [re_path(r"^__debug__/", include(debug_toolbar.urls))]
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -9,13 +9,17 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('cartproductsapp', '0001_initial'),
+        ("cartproductsapp", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='cart',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='cart', to=settings.AUTH_USER_MODEL),
+            model_name="cart",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="cart",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

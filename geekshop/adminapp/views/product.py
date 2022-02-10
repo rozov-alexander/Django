@@ -21,7 +21,7 @@ def product_create(request, pk):
     title = "продукт/создание"
 
     category = get_object_or_404(ProductCategory, pk=pk).pk
-    
+
     if request.method == "POST":
         product_form = ProductEditForm(request.POST, request.FILES)
         if product_form.is_valid():

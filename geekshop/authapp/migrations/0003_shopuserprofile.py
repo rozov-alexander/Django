@@ -8,18 +8,46 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authapp', '0002_auto_20220112_2118'),
+        ("authapp", "0002_auto_20220112_2118"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ShopUserProfile',
+            name="ShopUserProfile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tagline', models.CharField(blank=True, max_length=128, verbose_name='теги')),
-                ('aboutMe', models.TextField(blank=True, max_length=512, verbose_name='о себе')),
-                ('gender', models.CharField(blank=True, choices=[('M', 'М'), ('W', 'Ж')], max_length=1, verbose_name='пол')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "tagline",
+                    models.CharField(blank=True, max_length=128, verbose_name="теги"),
+                ),
+                (
+                    "aboutMe",
+                    models.TextField(blank=True, max_length=512, verbose_name="о себе"),
+                ),
+                (
+                    "gender",
+                    models.CharField(
+                        blank=True,
+                        choices=[("M", "М"), ("W", "Ж")],
+                        max_length=1,
+                        verbose_name="пол",
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

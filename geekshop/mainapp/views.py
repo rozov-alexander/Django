@@ -28,7 +28,9 @@ def get_hot_product():
 
 
 def index(request):
-    products = Product.objects.filter(is_active=True, category__is_active=True).select_related('category')[:3]
+    products = Product.objects.filter(
+        is_active=True, category__is_active=True
+    ).select_related("category")[:3]
 
     return render(
         request,
@@ -58,40 +60,39 @@ def products(request, pk=None, page=1):
 
     if pk is not None:
         if pk == 0:
-            category = {
-                'pk': 0,
-                'name': 'все'
-                }
-            products = Product.objects.filter(is_active=True, \
-                        category__is_active=True).order_by('price')
-            category = {'name': 'все'}
+            category = {"pk": 0, "name": "все"}
+            products = Product.objects.filter(
+                is_active=True, category__is_active=True
+            ).order_by("price")
+            category = {"name": "все"}
         else:
             category = get_object_or_404(ProductCategory, pk=pk)
-            products = Product.objects.filter(category__pk=pk, \
-                        is_active=True, category__is_active=True).order_by('price')
+            products = Product.objects.filter(
+                category__pk=pk, is_active=True, category__is_active=True
+            ).order_by("price")
 
         content = {
-            'title': title,
-            'top_menu_links': top_menu_links,
-            'categories_menu': categories_menu,
-            'category': category,
-            'products': products,
+            "title": title,
+            "top_menu_links": top_menu_links,
+            "categories_menu": categories_menu,
+            "category": category,
+            "products": products,
         }
-        return render(request, 'mainapp/products_list.html', content)
+        return render(request, "mainapp/products_list.html", content)
 
     if not pk:
         category = ProductCategory.objects.first()
     hot_product = get_hot_product()
-    
+
     same_products = Product.objects.all()[3:6]
-    content = { 
-        'title': title,
-        'top_menu_links': top_menu_links,
-        'categories_menu': categories_menu,
-        'hot_product': hot_product,
-        'same_products': same_products,
-        'category': category,
-        }
+    content = {
+        "title": title,
+        "top_menu_links": top_menu_links,
+        "categories_menu": categories_menu,
+        "hot_product": hot_product,
+        "same_products": same_products,
+        "category": category,
+    }
     return render(request, "mainapp/products.html", content)
 
 
