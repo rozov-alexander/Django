@@ -79,9 +79,8 @@ def product_delete(request, pk):
     pk = product.category.pk
 
     if request.method == "POST":
-        # product.is_active = False
-        # product.save()
-        product.delete()
+        product.is_active = False
+        product.save()
         return HttpResponseRedirect(reverse("admin:products", args=[pk]))
 
     content = {"title": title, "product_to_delete": product, "category": category}
