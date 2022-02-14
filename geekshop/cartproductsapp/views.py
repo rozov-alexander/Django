@@ -10,7 +10,7 @@ from django.http import JsonResponse
 @login_required
 def cart(request):
     title = "корзина"
-    cart_items = Cart.objects.filter(user=request.user).order_by("product__category")
+    cart_items = Cart.objects.filter(user=request.user).order_by("product__category").select_related()
 
     content = {
         "title": title,
@@ -21,11 +21,11 @@ def cart(request):
 
 @login_required
 def add_to_cart(request, pk=None):
-    product = get_object_or_404(Product, pk=pk)
+    product = get_object_or_404(Product, pk=pk).select_related()
 
     cart_product = request.user.cart.filter(id=pk).first()
     if not cart_product:
-        cart_product = Cart(user=request.user, product=product)
+        cart_product = Cart(user=request.user, product=product).select_related()
 
     cart_product.quantity += 1
     cart_product.save()
@@ -48,7 +48,7 @@ def cart_edit(request, pk, quantity):
     else:
         new_cart_item.delete()
 
-    cart_items = Cart.objects.filter(user=request.user).order_by("product__category")
+    cart_items = Cart.objects.filter(user=request.user).order_by("product__category").select_related()
 
     content = {
         "cart_items": cart_items,
