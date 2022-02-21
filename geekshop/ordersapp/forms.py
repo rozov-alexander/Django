@@ -27,4 +27,4 @@ class OrderItemForm(forms.ModelForm):
             field.widget.attrs["class"] = "form-control"
             # if field_name == 'price':
             #     field.widget.attrs['readonly'] = 'true'
-        self.fields["product"].queryset = Product.get_items()
+        self.fields["product"].queryset = Product.get_items().select_related()

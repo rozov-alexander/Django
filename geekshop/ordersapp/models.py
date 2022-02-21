@@ -29,7 +29,7 @@ class Order(models.Model):
         choices=ORDER_STATUS_CHOICES,
         default=FORMING,
     )
-    is_active = models.BooleanField(verbose_name="активен", default=True)
+    is_active = models.BooleanField(db_index=True, verbose_name="активен", default=True)
 
     class Meta:
         ordering = ("-created",)

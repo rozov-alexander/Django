@@ -5,6 +5,7 @@ import random
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings 
 from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 
 
 top_menu_links = [
@@ -19,12 +20,12 @@ top_menu_links = [
 
 def get_links_menu():
     if settings.LOW_CACHE: 
-        key = 'links_menu'
-        links_menu = cache.get(key)
-        if links_menu is None:
-            links_menu = ProductCategory.objects.filter(is_active=True)
-            cache.set(key, links_menu)
-        return links_menu
+        key = 'categories_menu'
+        categories_menu = cache.get(key)
+        if categories_menu is None:
+            categories_menu = ProductCategory.objects.filter(is_active=True)
+            cache.set(key, categories_menu)
+        return categories_menu
     else:
         return ProductCategory.objects.filter(is_active=True)
 
@@ -126,7 +127,7 @@ def contact(request):
         },
     )
 
-
+@cache_page(3600)
 def products(request, pk=None, page=1):
     title = "продукты"
     categories_menu = get_links_menu()
@@ -135,7 +136,6 @@ def products(request, pk=None, page=1):
         if pk == 0:
             category = {"pk": 0, "name": "все"}
             products = get_products_orederd_by_price()
-            category = {"name": "все"}
         else:
             category = get_category(pk)
             products = get_products_in_category_orederd_by_price(pk)
@@ -176,3 +176,37 @@ def product(request, pk):
     return render(request, "mainapp/product.html", content)
 
 
+def products_ajax(request, pk=None, page=1):
+    title = "продукты"
+    categories_menu = get_links_menu()
+
+    if pk is not None:
+        if pk == 0:
+            category = {"pk": 0, "name": "все"}
+            products = get_products_orederd_by_price()
+        else:
+            category = get_category(pk)
+            products = get_products_in_category_orederd_by_price(pk)
+
+        content = {
+            "title": title,
+            "top_menu_links": top_menu_links,
+            "categories_menu": categories_menu,
+            "category": category,
+            "products": products,
+        }
+        return render(request, "mainapp/includes/inc_products_list_content.html", content)
+
+    if not pk:
+        category = ProductCategory.objects.first()
+    hot_product = get_hot_product()
+    same_products = Product.objects.all()[3:6]
+    content = {
+        "title": title,
+        "top_menu_links": top_menu_links,
+        "categories_menu": categories_menu,
+        "hot_product": hot_product,
+        "same_products": same_products,
+        "category": category,
+    }
+    return render(request, "mainapp/products.html", content)

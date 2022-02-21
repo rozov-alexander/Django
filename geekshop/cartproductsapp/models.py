@@ -1,6 +1,7 @@
 from django.db import models
 from authapp.models import ShopUser
 from mainapp.models import Product
+from django.utils.functional import cached_property
 
 
 class Cart(models.Model):
@@ -8,6 +9,12 @@ class Cart(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name="количество", default=0)
     created_time = models.DateTimeField(verbose_name="время", auto_now_add=True)
+
+
+    @cached_property
+    def get_items_cached(self):
+        return self.user.cart.select_related()
+
 
     @property
     def product_cost(self):
@@ -17,16 +24,17 @@ class Cart(models.Model):
     @property
     def total_quantity(self):
         "return total quantity for user"
-        _items = Cart.objects.filter(user=self.user)
+        _items = self.get_items_cached
         _total_quantity = sum(list(map(lambda x: x.quantity, _items)))
         return _total_quantity
 
     @property
     def total_cost(self):
         "return total cost for user"
-        _items = Cart.objects.filter(user=self.user)
+        _items = self.get_items_cached
         _total_cost = sum(list(map(lambda x: x.product_cost, _items)))
         return _total_cost
+
 
     @classmethod
     def get_items(self, user):
