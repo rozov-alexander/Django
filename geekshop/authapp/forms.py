@@ -51,15 +51,6 @@ class ShopUserRegisterForm(UserCreationForm):
         return user
 
 
-# class KazanRestrictionMixin:
-#     def clean_city(self):
-#     data = self.cleaned_data['city']
-#     if data != 'Казань':
-#         raise forms.ValidationError("Только для жителей Казани!")
-
-#     return data
-
-
 class ShopUserEditForm(UserChangeForm):
     class Meta:
         model = ShopUser
