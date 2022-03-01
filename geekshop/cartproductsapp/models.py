@@ -11,7 +11,7 @@ class Cart(models.Model):
     created_time = models.DateTimeField(verbose_name="время", auto_now_add=True)
 
 
-    @cached_property
+    @property
     def get_items_cached(self):
         return self.user.cart.select_related()
 

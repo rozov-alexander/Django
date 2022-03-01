@@ -75,6 +75,7 @@ def register(request):
 
     return render(request, "authapp/register.html", content)
 
+
 @login_required
 @transaction.atomic
 def edit(request):
