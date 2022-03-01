@@ -17,7 +17,11 @@
 
 {% if cart_items %}
     <div class="basket_summary">
-        В корзине {{ cart_items.0.total_quantity }} товаров общей стоимостью
-        {{ cart_items.0.total_cost }} руб 
+        {% with total_quantity=cart_items.0.total_quantity %}
+        {% with total_cost=cart_items.0.total_cost %}
+        В корзине {{ total_quantity }} товаров общей стоимостью
+        {{ total_cost }} руб 
+        {% endwith %}
+        {% endwith %}
     </div>
 {% endif %}

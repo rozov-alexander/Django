@@ -21,11 +21,11 @@ def cart(request):
 
 @login_required
 def add_to_cart(request, pk=None):
-    product = get_object_or_404(Product, pk=pk).select_related()
+    product = get_object_or_404(Product, pk=pk)
 
     cart_product = request.user.cart.filter(id=pk).first()
     if not cart_product:
-        cart_product = Cart(user=request.user, product=product).select_related()
+        cart_product = Cart(user=request.user, product=product)
 
     cart_product.quantity += 1
     cart_product.save()
